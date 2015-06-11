@@ -1,8 +1,7 @@
+/// <reference path='../redis/redis.d.ts' />
 declare module "designco-store" {
-	export = Store;
-}
-
-declare module Store {
+	import redis = require("redis");
+	export function client(): redis.RedisClient;
 	export function pub(event: AppEvent);
 	export function psub(channel: string, callback: (channel: string, pattern: string, message: string) => void);
 	export function sub(channel: string, callback: (channel: string, message: string) => void);

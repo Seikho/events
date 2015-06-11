@@ -1,9 +1,15 @@
 import client = require("./client");
 import Promise = require("bluebird");
 import log = require("designco-logger");
+
+import types = require("designco-store");
+import AppEvent = types.AppEvent;
+import EventType = types.EventType;
+import EventContext = types.EventContext;
+
 export = publish;
 
-function publish(event: Store.AppEvent) {
+function publish(event: AppEvent) {
 	var redisClient = client();
 
 	redisClient.on("connect", () => {
@@ -33,7 +39,7 @@ function publish(event: Store.AppEvent) {
 	});
 }
 
-function eventToStorable(event: Store.AppEvent) {
+function eventToStorable(event: AppEvent) {
 	return {
 		event: typeToString(event.event),
 		context: contextToString(event.context),
@@ -42,37 +48,37 @@ function eventToStorable(event: Store.AppEvent) {
 	}
 }
 
-function eventToListName(event: Store.AppEvent) {
+function eventToListName(event: AppEvent) {
 	var eventContext = contextToString(event.context);
 	return eventContext + "/" + event.key;
 }
 
-function eventToChannel(event: Store.AppEvent) {
+function eventToChannel(event: AppEvent) {
 	var eventContext = contextToString(event.context);
 	var eventType = typeToString(event.event);
 
 	return [eventContext, eventType, event.key].join("/");
 }
 
-function typeToString(eventType: Store.EventType) {
+function typeToString(eventType: EventType) {
 	switch (eventType) {
-		case Store.EventType.Create:
+		case EventType.Create:
 			return "create";
-		case Store.EventType.Read:
+		case EventType.Read:
 			return "read";
-		case Store.EventType.Update:
+		case EventType.Update:
 			return "update";
-		case Store.EventType.Delete:
+		case EventType.Delete:
 			return "delete";
-		case Store.EventType.Notification:
+		case EventType.Notification:
 			return "notification";
 	}
 	throw "InvalidTypeException: Invalid EventType provided";
 }
 
-function contextToString(eventContext: Store.EventContext) {
+function contextToString(eventContext: EventContext) {
 	switch (eventContext) {
-		case Store.EventContext.User:
+		case EventContext.User:
 			return "users";
 	}
 	throw "InvalidContextException: Invalid EventContext provided";

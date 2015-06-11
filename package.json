@@ -1,6 +1,6 @@
 {
   "name": "designco-store",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "DesignCo Event Bus and Store",
   "main": "src/index.js",
   "scripts": {
