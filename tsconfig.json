@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "sourceMap": false
+    },
+    "filesGlob": [
+        "./src/**/*.ts"
+    ],
+    "files": [
+        "./src/index.ts",
+        "./src/pub.ts",
+        "./src/typings/bluebird/bluebird.d.ts",
+        "./src/typings/designco-store/designco-store.d.ts",
+        "./src/typings/node/node.d.ts"
+    ]
+}

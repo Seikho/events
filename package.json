@@ -1,0 +1,31 @@
+{
+  "name": "designco-store",
+  "version": "0.1.0",
+  "description": "DesignCo Event Bus and Store",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seikho/designco-store.git"
+  },
+  "keywords": [
+    "designco",
+    "event",
+    "sourcing",
+    "store",
+    "cqrs",
+    "bus",
+    "redis"
+  ],
+  "author": "Carl Winkler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seikho/designco-store/issues"
+  },
+  "homepage": "https://github.com/seikho/designco-store#readme",
+  "dependencies": {
+    "bluebird": "^2.9.27"
+  }
+}
