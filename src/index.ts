@@ -3,13 +3,15 @@ import pub = require("./pub");
 import psub = require("./patternSub");
 import sub = require("./sub");
 import cfg = require("designco-config");
+import fetch = require("./fetch");
+
 export = {
 	client: client,
 	pub: pub,
 	sub: sub,
 	psub: psub,
 	setHost: setHost,
-	fetch: () => { } // NOOP
+	fetch: fetch
 };
 
 function setHost(hostname: string, port?: number) {

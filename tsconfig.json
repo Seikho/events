@@ -9,6 +9,7 @@
     ],
     "files": [
         "./src/client.ts",
+        "./src/fetch.ts",
         "./src/index.ts",
         "./src/patternSub.ts",
         "./src/pub.ts",

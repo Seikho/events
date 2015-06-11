@@ -3,6 +3,7 @@ var pub = require("./pub");
 var psub = require("./patternSub");
 var sub = require("./sub");
 var cfg = require("designco-config");
+var fetch = require("./fetch");
 function setHost(hostname, port) {
     cfg.config("host", hostname);
     if (!port)
@@ -15,5 +16,5 @@ module.exports = {
     sub: sub,
     psub: psub,
     setHost: setHost,
-    fetch: function () { } // NOOP
+    fetch: fetch
 };
