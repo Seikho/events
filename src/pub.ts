@@ -1,8 +1,9 @@
 import client = require("./client");
 import Promise = require("bluebird");
+import log = require("designco-logger");
 export = publish;
 
-function publish(event: DesignCo.AppEvent) {
+function publish(event: Store.AppEvent) {
 	var redisClient = client();
 
 	redisClient.on("connect", () => {
@@ -18,21 +19,21 @@ function publish(event: DesignCo.AppEvent) {
 		
 		multi.exec((err, replies) => {
 			if (err) {
-				global.log.error("Publish transaction failed: " + err);
+				log.error("Publish transaction failed: " + err);
 				return;
 			}
-			global.log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
+			log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
 		});
 
 
 	});
 
 	redisClient.on("error", err => {
-		global.log.error("[PUB] RedisClient Error: " + err);
+		log.error("[PUB] RedisClient Error: " + err);
 	});
 }
 
-function eventToStorable(event: DesignCo.AppEvent) {
+function eventToStorable(event: Store.AppEvent) {
 	return {
 		event: typeToString(event.event),
 		context: contextToString(event.context),
@@ -41,37 +42,37 @@ function eventToStorable(event: DesignCo.AppEvent) {
 	}
 }
 
-function eventToListName(event: DesignCo.AppEvent) {
+function eventToListName(event: Store.AppEvent) {
 	var eventContext = contextToString(event.context);
 	return eventContext + "/" + event.key;
 }
 
-function eventToChannel(event: DesignCo.AppEvent) {
+function eventToChannel(event: Store.AppEvent) {
 	var eventContext = contextToString(event.context);
 	var eventType = typeToString(event.event);
 
 	return [eventContext, eventType, event.key].join("/");
 }
 
-function typeToString(eventType: DesignCo.EventType) {
+function typeToString(eventType: Store.EventType) {
 	switch (eventType) {
-		case DesignCo.EventType.Create:
+		case Store.EventType.Create:
 			return "create";
-		case DesignCo.EventType.Read:
+		case Store.EventType.Read:
 			return "read";
-		case DesignCo.EventType.Update:
+		case Store.EventType.Update:
 			return "update";
-		case DesignCo.EventType.Delete:
+		case Store.EventType.Delete:
 			return "delete";
-		case DesignCo.EventType.Notification:
+		case Store.EventType.Notification:
 			return "notification";
 	}
 	throw "InvalidTypeException: Invalid EventType provided";
 }
 
-function contextToString(eventContext: DesignCo.EventContext) {
+function contextToString(eventContext: Store.EventContext) {
 	switch (eventContext) {
-		case DesignCo.EventContext.User:
+		case Store.EventContext.User:
 			return "users";
 	}
 	throw "InvalidContextException: Invalid EventContext provided";

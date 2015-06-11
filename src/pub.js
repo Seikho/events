@@ -1,4 +1,5 @@
 var client = require("./client");
+var log = require("designco-logger");
 function publish(event) {
     var redisClient = client();
     redisClient.on("connect", function () {
@@ -12,14 +13,14 @@ function publish(event) {
         ]);
         multi.exec(function (err, replies) {
             if (err) {
-                global.log.error("Publish transaction failed: " + err);
+                log.error("Publish transaction failed: " + err);
                 return;
             }
-            global.log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
+            log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
         });
     });
     redisClient.on("error", function (err) {
-        global.log.error("[PUB] RedisClient Error: " + err);
+        log.error("[PUB] RedisClient Error: " + err);
     });
 }
 function eventToStorable(event) {
@@ -41,22 +42,22 @@ function eventToChannel(event) {
 }
 function typeToString(eventType) {
     switch (eventType) {
-        case DesignCo.EventType.Create:
+        case 0 /* Create */:
             return "create";
-        case DesignCo.EventType.Read:
+        case 1 /* Read */:
             return "read";
-        case DesignCo.EventType.Update:
+        case 2 /* Update */:
             return "update";
-        case DesignCo.EventType.Delete:
+        case 3 /* Delete */:
             return "delete";
-        case DesignCo.EventType.Notification:
+        case 4 /* Notification */:
             return "notification";
     }
     throw "InvalidTypeException: Invalid EventType provided";
 }
 function contextToString(eventContext) {
     switch (eventContext) {
-        case DesignCo.EventContext.User:
+        case 0 /* User */:
             return "users";
     }
     throw "InvalidContextException: Invalid EventContext provided";

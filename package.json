@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seikho/designco-store.git"
+    "url": "git+https://github.com/designco-wa/store.git"
   },
   "keywords": [
     "designco",
@@ -22,10 +22,13 @@
   "author": "Carl Winkler",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/seikho/designco-store/issues"
+    "url": "https://github.com/designco-wa/store/issues"
   },
-  "homepage": "https://github.com/seikho/designco-store#readme",
+  "homepage": "https://github.com/designco-wa/store#readme",
   "dependencies": {
-    "bluebird": "^2.9.27"
+    "bluebird": "^2.9.27",
+    "designco-logger": "designco-wa/logger",
+    "hiredis": "^0.4.0",
+    "redis": "^0.12.1"
   }
 }
