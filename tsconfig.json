@@ -9,12 +9,12 @@
     ],
     "files": [
         "./src/client.ts",
-        "./src/config.ts",
         "./src/index.ts",
         "./src/patternSub.ts",
         "./src/pub.ts",
         "./src/sub.ts",
         "./src/typings/bluebird/bluebird.d.ts",
+        "./src/typings/designco/designco-config.d.ts",
         "./src/typings/designco/designco-logger.d.ts",
         "./src/typings/designco/designco-store.d.ts",
         "./src/typings/node/node.d.ts",
