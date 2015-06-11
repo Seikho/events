@@ -1,5 +1,4 @@
 declare module "designco-store" {
-	function config(key: string, value?: string): string;
 	function pub(event: AppEvent);
 	function psub(channel: string, callback: (channel: string, pattern: string, message: string) => void);
 	function sub(channel: string, callback: (channel: string, message: string) => void);

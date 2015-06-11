@@ -1,8 +1,8 @@
 var redis = require("redis");
-var config = require("./config");
+var cfg = require("designco-config");
 function newClient() {
-    var redisPort = config["port"] || 6379;
-    var redisHost = config["host"] || "localhost";
+    var redisPort = cfg.config("port") || 6379;
+    var redisHost = cfg.config("host") || "localhost";
     var client = redis.createClient(redisPort, redisHost);
     return client;
 }
