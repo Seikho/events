@@ -12,6 +12,7 @@ declare module Store {
 	}
 
 	export interface StoreApi {
+		config(key: string, value?: string): string;
 		pub(event: AppEvent);
 		psub(channel: string, callback: (channel: string, pattern: string, message: string) => void);
 		sub(channel: string, callback: (channel: string, message: string) => void);
