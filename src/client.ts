@@ -1,5 +1,7 @@
 import redis = require("redis");
 import cfg = require("designco-config");
+require("redis-scanstreams")(redis);
+
 export = newClient;
 
 function newClient(): redis.RedisClient {
