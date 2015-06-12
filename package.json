@@ -27,9 +27,11 @@
   "homepage": "https://github.com/designco-wa/store#readme",
   "dependencies": {
     "bluebird": "^2.9.27",
+    "chai": "^3.0.0",
     "designco-config": "designco-wa/config",
     "designco-logger": "designco-wa/logger",
     "hiredis": "^0.4.0",
+    "mocha": "^2.2.5",
     "redis": "^0.12.1"
   }
 }
