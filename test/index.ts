@@ -14,4 +14,12 @@ describe("redis tests", () => {
 			done();
 		});
 	});
+	
+	it("will subscribe to a pattern", done => {
+		store.psub("users/create/*", () => {})
+		.then(res => {
+			expect(res).to.be.true;
+			done();
+		}).catch();
+	});
 });

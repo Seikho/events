@@ -11,4 +11,11 @@ describe("redis tests", function () {
             done();
         });
     });
+    it("will subscribe to a pattern", function (done) {
+        store.psub("users/create/*", function () { })
+            .then(function (res) {
+            expect(res).to.be.true;
+            done();
+        }).catch();
+    });
 });

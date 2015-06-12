@@ -9,34 +9,33 @@ import EventContext = types.EventContext;
 
 export = publish;
 
+//TODO: Needs refactoring
 function publish(event: AppEvent) {
 	var redisClient = client();
 
-	redisClient.on("connect", () => {
-		var channel = eventToChannel(event);
-		var message = JSON.stringify(event.data);
-		var store = eventToListName(event);
-		var storableEvent = eventToStorable(event);
+	var pubPromise = new Promise((resolve, reject) => {
+		redisClient.on("connect", () => {
+			var channel = eventToChannel(event);
+			var message = JSON.stringify(event.data);
+			var store = eventToListName(event);
+			var storableEvent = eventToStorable(event);
 
-		var multi = redisClient.multi([
-			["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
-			["publish", channel, message]
-		]);
-		
-		multi.exec((err, replies) => {
-			if (err) {
-				log.error("Publish transaction failed: " + err);
-				return;
-			}
-			log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
+			var multi = redisClient.multi([
+				["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
+				["publish", channel, message]
+			]);
+
+			multi.exec((err, replies) => {
+				reject("Transaction failed: " + err);
+				resolve(Promise.resolve(JSON.stringify(replies)));
+			});
 		});
 
-
+		redisClient.on("error", err => {
+			reject("Failed to connect: " + err);
+		});
 	});
-
-	redisClient.on("error", err => {
-		log.error("[PUB] RedisClient Error: " + err);
-	});
+	return pubPromise;
 }
 
 function eventToStorable(event: AppEvent) {

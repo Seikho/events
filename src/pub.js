@@ -1,27 +1,28 @@
 var client = require("./client");
-var log = require("designco-logger");
+var Promise = require("bluebird");
+//TODO: Needs refactoring
 function publish(event) {
     var redisClient = client();
-    redisClient.on("connect", function () {
-        var channel = eventToChannel(event);
-        var message = JSON.stringify(event.data);
-        var store = eventToListName(event);
-        var storableEvent = eventToStorable(event);
-        var multi = redisClient.multi([
-            ["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
-            ["publish", channel, message]
-        ]);
-        multi.exec(function (err, replies) {
-            if (err) {
-                log.error("Publish transaction failed: " + err);
-                return;
-            }
-            log.info("[" + channel + "] Transaction successful: " + JSON.stringify(replies));
+    var pubPromise = new Promise(function (resolve, reject) {
+        redisClient.on("connect", function () {
+            var channel = eventToChannel(event);
+            var message = JSON.stringify(event.data);
+            var store = eventToListName(event);
+            var storableEvent = eventToStorable(event);
+            var multi = redisClient.multi([
+                ["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
+                ["publish", channel, message]
+            ]);
+            multi.exec(function (err, replies) {
+                reject("Transaction failed: " + err);
+                resolve(Promise.resolve(JSON.stringify(replies)));
+            });
+        });
+        redisClient.on("error", function (err) {
+            reject("Failed to connect: " + err);
         });
     });
-    redisClient.on("error", function (err) {
-        log.error("[PUB] RedisClient Error: " + err);
-    });
+    return pubPromise;
 }
 function eventToStorable(event) {
     return {

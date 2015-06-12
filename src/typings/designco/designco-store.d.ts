@@ -2,9 +2,9 @@
 declare module "designco-store" {
 	import redis = require("redis");
 	export function client(): redis.RedisClient;
-	export function pub(event: AppEvent);
-	export function psub(channel: string, callback: (channel: string, pattern: string, message: string) => void);
-	export function sub(channel: string, callback: (channel: string, message: string) => void);
+	export function pub(event: AppEvent): Promise<{}>;
+	export function psub(channel: string, callback: (channel: string, pattern: string, message: string) => void): Promise<{}>;
+	export function sub(channel: string, callback: (channel: string, message: string) => void): Promise<{}>;
 	export function fetch(pattern: string, count?: number);
 	export function setHost(hostname: string, port?: number);
 

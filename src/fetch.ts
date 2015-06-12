@@ -5,6 +5,7 @@ import EventType = types.EventType;
 import EventContext = types.EventContext;
 
 function fetch(eventContext: EventContext, pattern: string): any[] {
-	var redisClient = client();
+	var redisClient: any = client();
 	redisClient.zscan(["events", 0, pattern], console.log);
+	return null;
 }
