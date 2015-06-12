@@ -5,9 +5,11 @@
         "sourceMap": false
     },
     "filesGlob": [
-        "./src/**/*.ts"
+        "./src/**/*.ts",
+        "./test/**/*.ts"
     ],
     "files": [
+        "./test/index.ts",
         "./src/client.ts",
         "./src/fetch.ts",
         "./src/index.ts",
@@ -15,9 +17,11 @@
         "./src/pub.ts",
         "./src/sub.ts",
         "./src/typings/bluebird/bluebird.d.ts",
+        "./src/typings/chai/chai.d.ts",
         "./src/typings/designco/designco-config.d.ts",
         "./src/typings/designco/designco-logger.d.ts",
         "./src/typings/designco/designco-store.d.ts",
+        "./src/typings/mocha/mocha.d.ts",
         "./src/typings/node/node.d.ts",
         "./src/typings/redis/redis.d.ts"
     ]
