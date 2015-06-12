@@ -3,12 +3,12 @@ var Promise = require("bluebird");
 //TODO: Needs refactoring
 function publish(event) {
     var redisClient = client();
+    var channel = eventToChannel(event);
+    var message = JSON.stringify(event.data);
+    var store = eventToListName(event);
+    var storableEvent = eventToStorable(event);
     var pubPromise = new Promise(function (resolve, reject) {
         redisClient.on("connect", function () {
-            var channel = eventToChannel(event);
-            var message = JSON.stringify(event.data);
-            var store = eventToListName(event);
-            var storableEvent = eventToStorable(event);
             var multi = redisClient.multi([
                 ["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
                 ["publish", channel, message]
@@ -26,20 +26,17 @@ function publish(event) {
 }
 function eventToStorable(event) {
     return {
-        event: typeToString(event.event),
-        context: contextToString(event.context),
+        event: event.event,
+        context: event.context,
         key: event.key,
         data: event.data
     };
 }
 function eventToListName(event) {
-    var eventContext = contextToString(event.context);
-    return eventContext + "/" + event.key;
+    return event.context + "/" + event.key;
 }
 function eventToChannel(event) {
-    var eventContext = contextToString(event.context);
-    var eventType = typeToString(event.event);
-    return [eventContext, eventType, event.key].join("/");
+    return [event.context, event.event, event.key].join("/");
 }
 function typeToString(eventType) {
     switch (eventType) {
@@ -55,12 +52,5 @@ function typeToString(eventType) {
             return "notification";
     }
     throw "InvalidTypeException: Invalid EventType provided";
-}
-function contextToString(eventContext) {
-    switch (eventContext) {
-        case 0 /* User */:
-            return "users";
-    }
-    throw "InvalidContextException: Invalid EventContext provided";
 }
 module.exports = publish;

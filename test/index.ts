@@ -14,12 +14,43 @@ describe("redis tests", () => {
 			done();
 		});
 	});
-	
-	it("will subscribe to a pattern", done => {
-		store.psub("users/create/*", () => {})
-		.then(res => {
+
+	it("will subscribe to a pattern channel", done => {
+		store.psub("users/create/*", () => { })
+			.then(res => {
+				expect(res).to.be.true;
+				done();
+			}).catch(done);
+	});
+
+	it("will subscribe to a non-pattern channel", done => {
+		store.sub("users/create/c.winkler", () => { })
+			.then(res => {
+				expect(res).to.be.true;
+				done();
+			}).catch(done);
+	});
+
+	it("will publish a new user to the event log", done => {
+		var event = {
+			event: Store.Operation.Create,
+			context: Store.Context.User,
+			key: "c.winkler",
+			data: {
+				username: "c.winkler",
+				email: "carl@longshot.io",
+				enabled: 1,
+				company: "longshot.io"
+			}
+		};
+		store.pub(event).then(res => {
 			expect(res).to.be.true;
 			done();
-		}).catch();
+		}).catch(done);
 	});
+	
+	it("will fetch the previous message", done => {
+		//store.fetch()
+	});
+
 });
