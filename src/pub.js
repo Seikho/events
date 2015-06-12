@@ -14,8 +14,10 @@ function publish(event) {
                 ["publish", channel, message]
             ]);
             multi.exec(function (err, replies) {
-                reject("Transaction failed: " + err);
-                resolve(Promise.resolve(JSON.stringify(replies)));
+                if (err)
+                    reject("Transaction failed: " + err);
+                else
+                    resolve(Promise.resolve(JSON.stringify(replies)));
             });
         });
         redisClient.on("error", function (err) {

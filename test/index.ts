@@ -44,13 +44,17 @@ describe("redis tests", () => {
 			}
 		};
 		store.pub(event).then(res => {
-			expect(res).to.be.true;
+			expect(res).to.exist;
 			done();
 		}).catch(done);
 	});
 	
 	it("will fetch the previous message", done => {
-		//store.fetch()
+		store.fetch("users/create/*", 1)
+		.then(result => {
+			console.log(result);
+			done();
+		}).catch(done);
 	});
 
 });

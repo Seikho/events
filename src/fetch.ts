@@ -1,7 +1,17 @@
 import client = require("./client");
+import Promise = require("bluebird");
+export = fetch;
 
-function fetch(context: Store.Context, pattern: string): any[] {
+function fetch(pattern: string, count?: number): Promise<any> {
 	var redisClient: any = client();
-	redisClient.zscan(["events", 0, pattern], console.log);
-	return null;
+
+	var fetchPromise = new Promise((resolve, reject) => {
+		redisClient.zscan(["events", 0, pattern, count || 1], (err, result) => {
+			if (err) reject("Failed to fetch: " + err);
+			else resolve(Promise.resolve(result));
+		});
+
+	});
+
+	return fetchPromise;
 }

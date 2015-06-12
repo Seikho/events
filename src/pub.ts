@@ -20,8 +20,8 @@ function publish(event: Store.Event) {
 			]);
 
 			multi.exec((err, replies) => {
-				reject("Transaction failed: " + err);
-				resolve(Promise.resolve(JSON.stringify(replies)));
+				if (err) reject("Transaction failed: " + err);
+				else resolve(Promise.resolve(JSON.stringify(replies)));
 			});
 		});
 

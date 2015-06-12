@@ -38,11 +38,15 @@ describe("redis tests", function () {
             }
         };
         store.pub(event).then(function (res) {
-            expect(res).to.be.true;
+            expect(res).to.exist;
             done();
         }).catch(done);
     });
     it("will fetch the previous message", function (done) {
-        //store.fetch()
+        store.fetch("users/create/*", 1)
+            .then(function (result) {
+            console.log(result);
+            done();
+        }).catch(done);
     });
 });

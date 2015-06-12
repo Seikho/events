@@ -32,6 +32,7 @@
     "designco-logger": "designco-wa/logger",
     "hiredis": "^0.4.0",
     "mocha": "^2.2.5",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "redis-scanstreams": "^1.0.3"
   }
 }
