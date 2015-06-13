@@ -42,15 +42,15 @@ function eventToChannel(event) {
 }
 function typeToString(eventType) {
     switch (eventType) {
-        case 0 /* Create */:
+        case Store.Operation.Create:
             return "create";
-        case 1 /* Read */:
+        case Store.Operation.Read:
             return "read";
-        case 2 /* Update */:
+        case Store.Operation.Update:
             return "update";
-        case 3 /* Delete */:
+        case Store.Operation.Delete:
             return "delete";
-        case 4 /* Notification */:
+        case Store.Operation.Notification:
             return "notification";
     }
     throw "InvalidTypeException: Invalid EventType provided";

@@ -27,8 +27,8 @@ describe("redis tests", function () {
     });
     it("will publish a new user to the event log", function (done) {
         var event = {
-            event: 0 /* Create */,
-            context: 0 /* User */,
+            event: "create",
+            context: "user",
             key: "c.winkler",
             data: {
                 username: "c.winkler",

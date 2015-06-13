@@ -18,9 +18,9 @@
         "./src/sub.ts",
         "./src/typings/bluebird/bluebird.d.ts",
         "./src/typings/chai/chai.d.ts",
-        "./src/typings/longshot/config.ts",
-        "./src/typings/longshot/events.ts",
-        "./src/typings/longshot/logger.ts",
+        "./src/typings/longshot/config.d.ts",
+        "./src/typings/longshot/events.d.ts",
+        "./src/typings/longshot/logger.d.ts",
         "./src/typings/mocha/mocha.d.ts",
         "./src/typings/node/node.d.ts",
         "./src/typings/redis/redis.d.ts"
