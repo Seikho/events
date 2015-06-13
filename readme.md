@@ -53,7 +53,7 @@ Console output:
 	event: string, // operation type. E.g. create, read, update, delete, ...
 	context: string, // object type. E.g. users, orders, invoices, ...
 	key: string|number, // identifier of the object. typically the primary key.
-	data: any	
+	data: any // a POJO. This will get serialised and deserialsed using JSON.	
 }
 ```
 
@@ -82,7 +82,7 @@ function psub(channel: string, callback: (channel: string, pattern: string, mess
 ```
 
 ##### Publish
-Publish an event. See the [Event](#Event) type.  
+Publish an event. See the [Event](#event) type.  
 The publish function automatically constructs the `channel` from the `Event` object provided.
 
 ```javascript
