@@ -2,7 +2,7 @@ var client = require("./client");
 var pub = require("./pub");
 var psub = require("./patternSub");
 var sub = require("./sub");
-var cfg = require("designco-config");
+var cfg = require("ls-config");
 var fetch = require("./fetch");
 function setHost(hostname, port) {
     cfg.config("host", hostname);

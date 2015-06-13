@@ -1,3 +1,3 @@
-declare module "designco-config" {
+declare module "ls-config" {
 	export function config(key: string, value?: any): any;
 }
