@@ -1,6 +1,6 @@
 import chai = require("chai");
 import store = require("../src/index");
-import log = require("designco-logger");
+import log = require("ls-logger");
 
 var expect = chai.expect;
 store.setHost("192.168.59.103", 6379);
@@ -33,8 +33,8 @@ describe("redis tests", () => {
 
 	it("will publish a new user to the event log", done => {
 		var event = {
-			event: Store.Operation.Create,
-			context: Store.Context.User,
+			event: "create",
+			context: "user",
 			key: "c.winkler",
 			data: {
 				username: "c.winkler",
