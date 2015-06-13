@@ -89,7 +89,12 @@ The publish function automatically constructs the `channel` from the `Event` obj
 function pub(event: Event): Promise<{}>;
 ```
 
-##### Fetch `Under construction`
+##### Fetch
+Fetches events from the event store.  
+context: object type. Such as `'users'`, `'orders'`, ...
+event: type of event. Such as `'create'`, `'update'`, `'delete'`, ...
+key: the key of the object. Typically the primary key. In the previous example this would be `'carl'`.
+
 ```javascript
-function fetch(pattern: string, count?: number): Promise<any>;
+function fetch(context?: string, event?: string, key?: string): Promise<any>;
 ```
