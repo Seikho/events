@@ -57,17 +57,34 @@ Console output:
 }
 ```
 
+##### Configuration
+Configure the location of Redis.  
+Defaults to `127.0.0.1` and port `6379`
+```javascript
+function setHost(hostname: string, port?: number);
+
+```
+
 ##### Subscribe
+Subscribing to a simple channel such as: `users/create/carl`
 ```javascript
 function sub(channel: string, callback: (channel: string, message: string) =>  void): Promise<{}>;
 ```
 
 ##### Pattern Subscribe
+Subscribing to a event that conforms to a pattern, such as:  
+* `users/create/*`
+* `users/*/*`
+* `users/*/carl`
+
 ```javascript
 function psub(channel: string, callback: (channel: string, pattern: string, message: string) =>  void): Promise<{}>;
 ```
 
 ##### Publish
+Publish an event. See the [Event](#Event) type.  
+The publish function automatically constructs the `channel` from the `Event` object provided.
+
 ```javascript
 function pub(event: Event): Promise<{}>;
 ```
