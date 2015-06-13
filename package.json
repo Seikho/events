@@ -1,14 +1,14 @@
 {
-  "name": "designco-store",
-  "version": "0.4.1",
-  "description": "DesignCo Event Bus and Store",
+  "name": "ls-events",
+  "version": "0.5.0",
+  "description": "Longshot Event Bus and Store",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/designco-wa/store.git"
+    "url": "git+https://github.com/longshot-io/events.git"
   },
   "keywords": [
     "designco",
@@ -22,15 +22,15 @@
   "author": "Carl Winkler",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/designco-wa/store/issues"
+    "url": "https://github.com/longshot-io/events/issues"
   },
-  "homepage": "https://github.com/designco-wa/store#readme",
+  "homepage": "https://github.com/longshot-io/events#readme",
   "dependencies": {
     "bluebird": "^2.9.27",
     "chai": "^3.0.0",
-    "designco-config": "designco-wa/config",
-    "designco-logger": "designco-wa/logger",
     "hiredis": "^0.4.0",
+    "ls-config": "^0.1.0",
+    "ls-logger": "^0.1.0",
     "mocha": "^2.2.5",
     "redis": "^0.12.1",
     "redis-scanstreams": "^1.0.3"
