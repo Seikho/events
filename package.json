@@ -1,6 +1,6 @@
 {
   "name": "ls-events",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Longshot Event Bus and Store",
   "main": "src/index.js",
   "scripts": {
