@@ -1,5 +1,5 @@
 var client = require("./client");
-var log = require("designco-logger");
+var log = require("ls-logger");
 //TODO: Needs refactoring
 function subscribe(channels, callback) {
     var redisClient = client();

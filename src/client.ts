@@ -1,5 +1,5 @@
 import redis = require("redis");
-import cfg = require("designco-config");
+import cfg = require("ls-config");
 require("redis-scanstreams")(redis);
 
 export = newClient;

@@ -1,5 +1,5 @@
 var client = require("./client");
-var log = require("designco-logger");
+var log = require("ls-logger");
 var Promise = require("bluebird");
 //TODO: Needs refactoring
 function patternSubscribe(channels, callback) {

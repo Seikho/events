@@ -1,5 +1,5 @@
 var redis = require("redis");
-var cfg = require("designco-config");
+var cfg = require("ls-config");
 require("redis-scanstreams")(redis);
 function newClient() {
     var redisPort = cfg.config("port") || 6379;

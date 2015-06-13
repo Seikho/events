@@ -1,5 +1,5 @@
 import client = require("./client");
-import log = require("designco-logger");
+import log = require("ls-logger");
 export = subscribe;
 
 //TODO: Needs refactoring

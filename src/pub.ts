@@ -1,10 +1,10 @@
 import client = require("./client");
 import Promise = require("bluebird");
-import log = require("designco-logger");
+import log = require("ls-logger");
 export = publish;
 
 //TODO: Needs refactoring
-function publish(event: Store.Event) {
+function publish(event: Event) {
 	var redisClient = client();
 	var channel = eventToChannel(event);
 	var message = JSON.stringify(event.data);
@@ -32,7 +32,14 @@ function publish(event: Store.Event) {
 	return pubPromise;
 }
 
-function eventToStorable(event: Store.Event) {
+interface Event {
+	event: string,
+	context: string,
+	key: number|string,
+	data: any
+}
+
+function eventToStorable(event: Event) {
 	return {
 		event: event.event,
 		context: event.context,
@@ -41,26 +48,10 @@ function eventToStorable(event: Store.Event) {
 	}
 }
 
-function eventToListName(event: Store.Event) {
+function eventToListName(event: Event) {
 	return event.context + "/" + event.key;
 }
 
-function eventToChannel(event: Store.Event) {
+function eventToChannel(event: Event) {
 	return [event.context, event.event, event.key].join("/");
-}
-
-function typeToString(eventType: Store.Operation) {
-	switch (eventType) {
-		case Store.Operation.Create:
-			return "create";
-		case Store.Operation.Read:
-			return "read";
-		case Store.Operation.Update:
-			return "update";
-		case Store.Operation.Delete:
-			return "delete";
-		case Store.Operation.Notification:
-			return "notification";
-	}
-	throw "InvalidTypeException: Invalid EventType provided";
 }

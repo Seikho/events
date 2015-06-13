@@ -40,19 +40,4 @@ function eventToListName(event) {
 function eventToChannel(event) {
     return [event.context, event.event, event.key].join("/");
 }
-function typeToString(eventType) {
-    switch (eventType) {
-        case Store.Operation.Create:
-            return "create";
-        case Store.Operation.Read:
-            return "read";
-        case Store.Operation.Update:
-            return "update";
-        case Store.Operation.Delete:
-            return "delete";
-        case Store.Operation.Notification:
-            return "notification";
-    }
-    throw "InvalidTypeException: Invalid EventType provided";
-}
 module.exports = publish;

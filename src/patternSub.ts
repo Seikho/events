@@ -1,5 +1,5 @@
 import client = require("./client");
-import log = require("designco-logger");
+import log = require("ls-logger");
 import Promise = require("bluebird");
 export = patternSubscribe;
 
