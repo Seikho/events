@@ -1,25 +1,36 @@
 import client = require("./client");
 import Promise = require("bluebird");
+var terminus = require("terminus");
 export = fetch;
 
-function fetch(pattern: string, count?: number): Promise<any> {
+function fetch(context?: string, event?: string, key?: string): Promise<any> {
+	context = context || "*";
+	event = event || "*";
+	key = key || "*";
+	
 	var options = {
-		pattern: pattern,
-		count: count || 0
+		pattern: '*"channel":"' + [context, event, key].join("/") + '"*',
 	};
+	
+	console.log(options);
 
 	var redisClient: any = client();
 
 	var fetchPromise = new Promise((resolve, reject) => {
+		
+		var resultPipe = (results) => {
+			resolve(Promise.resolve(results));
+		};
+
 		redisClient.on("error", err => {
 			reject("Failed to fetch (Client failure): " + err);
 		});
 
 		redisClient.on("ready", () => {
-			redisClient.zscan("events", options, (err, result) => {
-				if (err) reject("Failed to fetch: " + err);
-				else resolve(Promise.resolve(result));
-			});
+			redisClient.zscan("events", options, err => {
+				if (err) reject("Failed to fetch: ")
+			}).pipe(terminus.concat({ objectMode: true }, resultPipe));
+
 		});
 	});
 

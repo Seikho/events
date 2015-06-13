@@ -1,5 +1,6 @@
 var client = require("./client");
 var Promise = require("bluebird");
+var log = require("ls-logger");
 //TODO: Needs refactoring
 function publish(event) {
     var redisClient = client();
@@ -16,8 +17,10 @@ function publish(event) {
             multi.exec(function (err, replies) {
                 if (err)
                     reject("Transaction failed: " + err);
-                else
+                else {
+                    log.debug("[PUB] Published to '" + channel + " (" + replies + ")");
                     resolve(Promise.resolve(JSON.stringify(replies)));
+                }
             });
         });
         redisClient.on("error", function (err) {
@@ -28,9 +31,7 @@ function publish(event) {
 }
 function eventToStorable(event) {
     return {
-        event: event.event,
-        context: event.context,
-        key: event.key,
+        channel: eventToChannel(event),
         data: event.data
     };
 }

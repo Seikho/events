@@ -21,7 +21,10 @@ function publish(event: Event) {
 
 			multi.exec((err, replies) => {
 				if (err) reject("Transaction failed: " + err);
-				else resolve(Promise.resolve(JSON.stringify(replies)));
+				else {
+					log.debug("[PUB] Published to '" + channel + " (" + replies + ")");
+					resolve(Promise.resolve(JSON.stringify(replies)));
+				}
 			});
 		});
 
@@ -41,9 +44,7 @@ interface Event {
 
 function eventToStorable(event: Event) {
 	return {
-		event: event.event,
-		context: event.context,
-		key: event.key,
+		channel: eventToChannel(event),
 		data: event.data
 	}
 }

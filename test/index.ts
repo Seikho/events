@@ -5,6 +5,10 @@ import log = require("ls-logger");
 var expect = chai.expect;
 store.setHost("192.168.59.103", 6379);
 
+function msgRecv(channel) {
+	log.info("Received message on '" + channel +"'");
+}
+
 describe("redis tests", () => {
 	var client = store.client();
 	it("will flush the database", done => {
@@ -16,7 +20,7 @@ describe("redis tests", () => {
 	});
 
 	it("will subscribe to a pattern channel", done => {
-		store.psub("users/create/*", () => { })
+		store.psub("users/create/*", msgRecv)
 			.then(res => {
 				expect(res).to.be.true;
 				done();
@@ -24,7 +28,7 @@ describe("redis tests", () => {
 	});
 
 	it("will subscribe to a non-pattern channel", done => {
-		store.sub("users/create/c.winkler", () => { })
+		store.sub("users/create/c.winkler", msgRecv)
 			.then(res => {
 				expect(res).to.be.true;
 				done();
@@ -34,7 +38,7 @@ describe("redis tests", () => {
 	it("will publish a new user to the event log", done => {
 		var event = {
 			event: "create",
-			context: "user",
+			context: "users",
 			key: "c.winkler",
 			data: {
 				username: "c.winkler",
@@ -50,7 +54,7 @@ describe("redis tests", () => {
 	});
 	
 	it("will fetch the previous message", done => {
-		store.fetch("users/create/*", 1)
+		store.fetch("users",null,"c.winkler")
 		.then(result => {
 			console.log(result);
 			done();

@@ -4,7 +4,7 @@ var log = require("ls-logger");
 function subscribe(channels, callback) {
     var redisClient = client();
     redisClient.on("psubscribe", function (channel, count) {
-        log.debug("Client successfully subscribed to '" + channel + "' (" + count + ")");
+        log.debug("[SUB]' Subscribed to " + channel + "' (" + count + ")");
     });
     redisClient.on("pmessage", function (channel, message) {
         callback(channel, message);

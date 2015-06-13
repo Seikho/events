@@ -1,7 +1,11 @@
 var chai = require("chai");
 var store = require("../src/index");
+var log = require("ls-logger");
 var expect = chai.expect;
 store.setHost("192.168.59.103", 6379);
+function msgRecv(channel) {
+    log.info("Received message on '" + channel + "'");
+}
 describe("redis tests", function () {
     var client = store.client();
     it("will flush the database", function (done) {
@@ -12,14 +16,14 @@ describe("redis tests", function () {
         });
     });
     it("will subscribe to a pattern channel", function (done) {
-        store.psub("users/create/*", function () { })
+        store.psub("users/create/*", msgRecv)
             .then(function (res) {
             expect(res).to.be.true;
             done();
         }).catch(done);
     });
     it("will subscribe to a non-pattern channel", function (done) {
-        store.sub("users/create/c.winkler", function () { })
+        store.sub("users/create/c.winkler", msgRecv)
             .then(function (res) {
             expect(res).to.be.true;
             done();
@@ -28,7 +32,7 @@ describe("redis tests", function () {
     it("will publish a new user to the event log", function (done) {
         var event = {
             event: "create",
-            context: "user",
+            context: "users",
             key: "c.winkler",
             data: {
                 username: "c.winkler",
@@ -43,7 +47,7 @@ describe("redis tests", function () {
         }).catch(done);
     });
     it("will fetch the previous message", function (done) {
-        store.fetch("users/create/*", 1)
+        store.fetch("users", null, "c.winkler")
             .then(function (result) {
             console.log(result);
             done();
