@@ -11,8 +11,6 @@ function fetch(context?: string, event?: string, key?: string): Promise<any> {
 	var options = {
 		pattern: '*"channel":"' + [context, event, key].join("/") + '"*',
 	};
-	
-	console.log(options);
 
 	var redisClient: any = client();
 

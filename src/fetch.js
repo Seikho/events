@@ -8,7 +8,6 @@ function fetch(context, event, key) {
     var options = {
         pattern: '*"channel":"' + [context, event, key].join("/") + '"*',
     };
-    console.log(options);
     var redisClient = client();
     var fetchPromise = new Promise(function (resolve, reject) {
         var resultPipe = function (results) {
