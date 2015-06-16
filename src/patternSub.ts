@@ -7,27 +7,28 @@ export = patternSubscribe;
 function patternSubscribe(channels: string|string[], callback: (channel: string, pattern: string, message: string) => void) {
 	var redisClient = client();
 
-	redisClient.on("psubscribe", (channel, count) => {
-		log.debug("[PSUB] Subscribed to '" + channel + "' (" + count + ")");
-	});
+	redisClient.on("psubscribe", subSuccess);
 
-	redisClient.on("pmessage", (channel, pattern, message) => {
-		callback(channel, pattern, message);
-	});
+	redisClient.on("pmessage", callback);
 
-	var subPromise = new Promise((resolve, reject) => {
-		redisClient.on("ready", () => {
-			if (channels instanceof Array)
-				channels.forEach(c => redisClient.psubscribe(c));
-			else redisClient.psubscribe(channels);
-			resolve(Promise.resolve(true));
-		});
-
-		redisClient.on("error", err => {
-			reject("[SUB] RedisClient error: " + err);
-		});
-	});
+	var subPromise = new Promise((rs, rj) => subHandler(rs, rj, channels, redisClient));
 
 	return subPromise;
 }
 
+function subSuccess(channel: string, count: number) {
+	log.debug("[PSUB] Subscribed to '" + channel + "' (" + count + ")");
+}
+
+function subHandler(resolve, reject, channels: string|string[], redisClient) {
+	redisClient.on("ready", () => {
+		if (channels instanceof Array)
+			channels.forEach(c => redisClient.psubscribe(c));
+		else redisClient.psubscribe(channels);
+		resolve(Promise.resolve(true));
+	});
+
+	redisClient.on("error", err => {
+		reject("[SUB] RedisClient error: " + err);
+	});
+}
