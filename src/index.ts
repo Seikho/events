@@ -14,9 +14,14 @@ export = {
 	fetch: fetch
 };
 
+var eventConfig = cfg.config("events") || "127.0.0.1:6379";
+var split = eventConfig.split(":");
+cfg.config("eventsHost", split[0]);
+cfg.config("eventsPort", split[1]);
+
 function setHost(hostname: string, port?: number) {
-	cfg.config("host", hostname);
+	cfg.config("eventsHost", hostname);
 	if (!port) return;
-	
-	cfg.config("port", port);
+
+	cfg.config("eventsPort", port);
 }
