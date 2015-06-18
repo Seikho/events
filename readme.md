@@ -13,6 +13,10 @@ npm install ls-events --save
 #### Usage
 All pub, sub and fetch methods return Promises.
 
+Run your app with the `--events hostname:port` to pass in the Redis location.  
+If no runtime arguments are provided, 127.0.0.1:6379 are used as default.  
+This can be overridden with the `setHost()` function. 
+
 ```javascript
 var events = require("ls-events");
 
