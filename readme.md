@@ -82,7 +82,10 @@ Subscribing to a event that conforms to a pattern, such as:
 * `users/*/carl`
 
 ```javascript
-function psub(channel: string, callback: (channel: string, pattern: string, message: string) =>  void): Promise<{}>;
+// Pattern: The pattern that was subscribed to
+// Channel: The fully qualified channel that was published to
+// Message: The message received
+function psub(channel: string, callback: (pattern: string, channel: string, message: string) =>  void): Promise<{}>;
 ```
 
 ##### Publish
