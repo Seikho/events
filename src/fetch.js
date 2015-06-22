@@ -11,7 +11,8 @@ function fetch(context, event, key) {
     var redisClient = client();
     var fetchPromise = new Promise(function (resolve, reject) {
         var resultPipe = function (results) {
-            resolve(Promise.resolve(results));
+            var parsedResults = parseFetchResults(results);
+            return Promise.resolve(parsedResults);
         };
         redisClient.on("error", function (err) {
             reject("Failed to fetch (Client failure): " + err);
@@ -24,5 +25,14 @@ function fetch(context, event, key) {
         });
     });
     return fetchPromise;
+}
+function parseFetchResults(fetchResults) {
+    var parsedResults = fetchResults.map(function (result) {
+        var parsedData = JSON.parse(result.key);
+        return {
+            key: parsedData,
+            value: result.value
+        };
+    });
 }
 module.exports = fetch;
