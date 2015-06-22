@@ -4,7 +4,9 @@ var Promise = require("bluebird");
 function patternSubscribe(channels, callback) {
     var redisClient = client();
     redisClient.on("psubscribe", subSuccess);
-    redisClient.on("pmessage", callback);
+    redisClient.on("pmessage", function (channel, pattern, message) {
+        callback(channel, pattern, JSON.parse(message));
+    });
     var subPromise = new Promise(function (rs, rj) { return subHandler(rs, rj, channels, redisClient); });
     return subPromise;
 }

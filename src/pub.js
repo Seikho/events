@@ -4,7 +4,7 @@ var log = require("ls-logger");
 function publish(event) {
     var redisClient = client();
     var channel = eventToChannel(event);
-    var message = dataToStorable(event);
+    var message = JSON.stringify(event.data);
     var store = eventToListName(event);
     var storableEvent = eventToStorable(event);
     var pubPromise = new Promise(function (resolve, reject) {
@@ -28,16 +28,10 @@ function publish(event) {
     });
     return pubPromise;
 }
-function dataToStorable(event) {
-    event.data = {
-        published: Date.now(),
-        data: event.data
-    };
-    return JSON.stringify(event.data);
-}
 function eventToStorable(event) {
     return {
         channel: eventToChannel(event),
+        published: Date.now(),
         data: event.data
     };
 }

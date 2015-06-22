@@ -17,4 +17,11 @@ declare module "ls-events" {
 		data: any;
 		key: string|number;
 	}
+
+	export interface EventData {
+		key: number;
+		channel: string;
+		published: number;
+		data: any;
+	}
 }

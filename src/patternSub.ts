@@ -9,7 +9,9 @@ function patternSubscribe(channels: string|string[], callback: (channel: string,
 
 	redisClient.on("psubscribe", subSuccess);
 
-	redisClient.on("pmessage", callback);
+	redisClient.on("pmessage", (channel, pattern, message) => {
+		callback(channel, pattern, JSON.parse(message));
+	});
 
 	var subPromise = new Promise((rs, rj) => subHandler(rs, rj, channels, redisClient));
 

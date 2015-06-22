@@ -7,7 +7,7 @@ export = publish;
 function publish(event: Event) {
 	var redisClient = client();
 	var channel = eventToChannel(event);
-	var message = dataToStorable(event);
+	var message = JSON.stringify(event.data);
 	var store = eventToListName(event);
 	var storableEvent = eventToStorable(event);
 
@@ -42,18 +42,10 @@ interface Event {
 	data: any
 }
 
-function dataToStorable(event: Event) {
-	event.data = {
-		published: Date.now(),
-		data: event.data
-	};
-
-	return JSON.stringify(event.data);
-}
-
 function eventToStorable(event: Event) {
 	return {
 		channel: eventToChannel(event),
+		published: Date.now(),
 		data: event.data
 	}
 }
