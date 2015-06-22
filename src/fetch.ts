@@ -42,8 +42,9 @@ function parseFetchResults(fetchResults: RawFetchResult[]) {
 	var parsedResults = fetchResults.map(result => {
 		var parsedData = JSON.parse(result.key);
 		return {
-			key: parsedData,
-			value: result.value
+			channel: parsedData.channel,
+            published: parsedData.published,
+            data: parsedData.data
 		};
 	});
 	return parsedResults;
