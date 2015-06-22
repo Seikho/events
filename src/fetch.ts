@@ -7,7 +7,7 @@ function fetch(context?: string, event?: string, key?: string): Promise<any> {
 	context = context || "*";
 	event = event || "*";
 	key = key || "*";
-	
+
 	var options = {
 		pattern: '*"channel":"' + [context, event, key].join("/") + '"*',
 	};
@@ -15,8 +15,8 @@ function fetch(context?: string, event?: string, key?: string): Promise<any> {
 	var redisClient: any = client();
 
 	var fetchPromise = new Promise((resolve, reject) => {
-		
-		var resultPipe = (results) => {
+
+		var resultPipe = results => {
 			resolve(Promise.resolve(results));
 		};
 

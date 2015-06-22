@@ -7,13 +7,13 @@ export = publish;
 function publish(event: Event) {
 	var redisClient = client();
 	var channel = eventToChannel(event);
-	var message = JSON.stringify(event.data);
+	var message = dataToStorable(event);
 	var store = eventToListName(event);
 	var storableEvent = eventToStorable(event);
 
 	var pubPromise = new Promise((resolve, reject) => {
 		redisClient.on("connect", () => {
-			
+
 			var multi = redisClient.multi([
 				["zadd", "events", Date.now(), JSON.stringify(storableEvent)],
 				["publish", channel, message]
@@ -40,6 +40,15 @@ interface Event {
 	context: string,
 	key: number|string,
 	data: any
+}
+
+function dataToStorable(event: Event) {
+	event.data = {
+		published: Date.now(),
+		data: event.data
+	};
+
+	return JSON.stringify(event.data);
 }
 
 function eventToStorable(event: Event) {

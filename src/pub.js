@@ -1,11 +1,10 @@
 var client = require("./client");
 var Promise = require("bluebird");
 var log = require("ls-logger");
-//TODO: Needs refactoring
 function publish(event) {
     var redisClient = client();
     var channel = eventToChannel(event);
-    var message = JSON.stringify(event.data);
+    var message = dataToStorable(event);
     var store = eventToListName(event);
     var storableEvent = eventToStorable(event);
     var pubPromise = new Promise(function (resolve, reject) {
@@ -28,6 +27,13 @@ function publish(event) {
         });
     });
     return pubPromise;
+}
+function dataToStorable(event) {
+    event.data = {
+        published: Date.now(),
+        data: event.data
+    };
+    return JSON.stringify(event.data);
 }
 function eventToStorable(event) {
     return {
