@@ -3,7 +3,7 @@ import log = require("ls-logger");
 export = subscribe;
 
 //TODO: Needs refactoring
-function subscribe(channels: string|string[], callback: (channel: string, message: string) => void) {
+function subscribe(channels: string|string[], callback: (channel: string, message: any) => void) {
 	var redisClient = client();
 
 	redisClient.on("psubscribe", (channel, count) => {
@@ -28,4 +28,3 @@ function subscribe(channels: string|string[], callback: (channel: string, messag
 	});
 	return subPromise;
 }
-

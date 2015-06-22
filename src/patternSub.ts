@@ -4,7 +4,7 @@ import Promise = require("bluebird");
 export = patternSubscribe;
 
 //TODO: Needs refactoring
-function patternSubscribe(channels: string|string[], callback: (channel: string, pattern: string, message: string) => void) {
+function patternSubscribe(channels: string|string[], callback: (channel: string, pattern: string, message: any) => void) {
 	var redisClient = client();
 
 	redisClient.on("psubscribe", subSuccess);
