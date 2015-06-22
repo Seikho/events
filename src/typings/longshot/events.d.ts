@@ -8,7 +8,7 @@ declare module "ls-events" {
 	export function pub(event: Event): Promise<{}>;
 	export function psub(channel: string, callback: (pattern: string, channel: string, message: any) => void): Promise<{}>;
 	export function sub(channel: string, callback: (channel: string, message: any) => void): Promise<{}>;
-	export function fetch(context?: string, event?: string, key?: string): Promise<FetchResult>;
+	export function fetch(context?: string, event?: string, key?: string): Promise<FetchResult[]>;
 	export function setHost(hostname: string, port?: number);
 
 	export interface Event {
@@ -19,7 +19,8 @@ declare module "ls-events" {
 	}
 
 	export interface FetchResult {
-		key: any;
-		value: number;
+		channel: string;
+		published: number;
+		data: any;
 	}
 }

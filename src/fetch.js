@@ -12,7 +12,7 @@ function fetch(context, event, key) {
     var fetchPromise = new Promise(function (resolve, reject) {
         var resultPipe = function (results) {
             var parsedResults = parseFetchResults(results);
-            return Promise.resolve(parsedResults);
+            resolve(parsedResults);
         };
         redisClient.on("error", function (err) {
             reject("Failed to fetch (Client failure): " + err);
@@ -34,5 +34,6 @@ function parseFetchResults(fetchResults) {
             value: result.value
         };
     });
+    return parsedResults;
 }
 module.exports = fetch;

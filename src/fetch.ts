@@ -16,9 +16,9 @@ function fetch(context?: string, event?: string, key?: string): Promise<any> {
 
 	var fetchPromise = new Promise((resolve, reject) => {
 
-		var resultPipe = (results: FetchResult[]) => {
+		var resultPipe = (results: RawFetchResult[]) => {
 			var parsedResults = parseFetchResults(results);
-			return Promise.resolve(parsedResults);
+			resolve(<any>parsedResults);
 		};
 
 		redisClient.on("error", err => {
@@ -38,7 +38,7 @@ function fetch(context?: string, event?: string, key?: string): Promise<any> {
 /**
  * Convert the stored data to a POJO from a JSON string
  */
-function parseFetchResults(fetchResults: FetchResult[]) {
+function parseFetchResults(fetchResults: RawFetchResult[]) {
 	var parsedResults = fetchResults.map(result => {
 		var parsedData = JSON.parse(result.key);
 		return {
@@ -46,9 +46,10 @@ function parseFetchResults(fetchResults: FetchResult[]) {
 			value: result.value
 		};
 	});
+	return parsedResults;
 }
 
-interface FetchResult {
+interface RawFetchResult {
 	key: any;
 	value: number;
 }
