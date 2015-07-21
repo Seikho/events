@@ -26,6 +26,9 @@ function fetch(context, event, key) {
     });
     return fetchPromise;
 }
+/**
+ * Convert the stored data to a POJO from a JSON string
+ */
 function parseFetchResults(fetchResults) {
     var parsedResults = fetchResults.map(function (result) {
         var parsedData = JSON.parse(result.key);

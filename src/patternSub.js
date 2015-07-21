@@ -1,6 +1,7 @@
 var client = require("./client");
 var log = require("ls-logger");
 var Promise = require("bluebird");
+//TODO: Needs refactoring
 function patternSubscribe(channels, callback) {
     var redisClient = client();
     redisClient.on("psubscribe", subSuccess);

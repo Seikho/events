@@ -1,6 +1,7 @@
 var client = require("./client");
 var Promise = require("bluebird");
 var log = require("ls-logger");
+//TODO: Needs refactoring
 function publish(event) {
     var redisClient = client();
     var channel = eventToChannel(event);

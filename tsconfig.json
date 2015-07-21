@@ -9,6 +9,7 @@
         "./test/**/*.ts"
     ],
     "files": [
+        "./test/index.ts",
         "./src/client.ts",
         "./src/fetch.ts",
         "./src/index.ts",
@@ -22,7 +23,6 @@
         "./src/typings/longshot/logger.d.ts",
         "./src/typings/mocha/mocha.d.ts",
         "./src/typings/node/node.d.ts",
-        "./src/typings/redis/redis.d.ts",
-        "./test/index.ts"
+        "./src/typings/redis/redis.d.ts"
     ]
 }
