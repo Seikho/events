@@ -28,7 +28,6 @@
   "dependencies": {
     "bluebird": "^2.9.27",
     "chai": "^3.0.0",
-    "hiredis": "^0.4.0",
     "ls-config": "^0",
     "ls-logger": "^0",
     "mocha": "^2.2.5",
