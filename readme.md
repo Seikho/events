@@ -21,9 +21,9 @@ This can be overridden with the `setHost()` function.
 var events = require("ls-events");
 
 // Subscribe to a pattern
-events.psub("users/create/*", function(ch, pt, msg) {
+events.psub("users/create/*", (ch, pt, msg) => {
 	console.log("[CHANNEL: %s] Message: %s", ch, msg);
-}).then(function(count) { console.log("Successfully listening with %d others", count) });
+}).then(count => console.log("Successfully listening with %d others", count));
 
 var newUser = {
 	username: 'carl',
@@ -38,7 +38,7 @@ var newEvent = {
 };
 
 events.pub("users/create/carl", newEvent)
-	.then(function() { console.log("Successfully published!"); });
+	.then(() => console.log("Successfully published!"));
 // This will publish to the channel 'users/create/carl' (context/event/key)
 
 /*
@@ -107,7 +107,7 @@ function fetch(context?: string, event?: string, key?: string): Promise<FetchRes
 
 interface FetchResult {
     channel: string;
-    published: number; // Data.now() when it the event was published
-    data: any; // POJO
+    published: number; // Date.now() when it the event was published
+    data: any; // Object
 }
 ```
